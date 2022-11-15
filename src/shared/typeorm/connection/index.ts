@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm'
 import { Account } from '../../../modules/accounts/typeorm/entities/Account';
-import { Customer } from '../../../modules/customers/typeorm/entities/Customer';
 import { Transactions } from '../../../modules/transactions/typeorm/entities/Account';
 
 const dataSource = new DataSource({
@@ -11,8 +10,8 @@ const dataSource = new DataSource({
     password: "postgres",
     database: "ng-challenge",
     migrations: ["/src/app/shared/typeorm/migrations"],
-    synchronize: true,
-    entities: [Customer, Account, Transactions]
+    synchronize: false,
+    entities: [Account, Transactions]
 });
 
 async function connectToDatabase(): Promise<void> {

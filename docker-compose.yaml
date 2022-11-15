@@ -1,31 +1,17 @@
 version: '3'
 
 services:
-  api:
-    container_name: ng-cash
+  transactions_mc:
+    container_name: ng-cash-transaction-miroservice
     image: node:18-alpine3.15
     restart: 'always'
     tty: true
-    depends_on:
-      - db
-    ports:
-      - 3000:3000
     volumes:
       - ./:/src/app
     environment:
       - PORT=3000
-  db:
-    container_name: ng-cash-database
-    image: postgres:latest
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ng-challenge
-  rabbitmq:
-    container_name: ng-cash-rabbitmq
-    image: rabbitmq
-    ports:
-      - 15672:15672
-      - 5672:5672
+
+networks:
+  default:
+    external:
+      name: rabbitmq-conn
