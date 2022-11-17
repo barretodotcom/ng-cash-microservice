@@ -2,6 +2,13 @@ import { dataSource } from "../../../../shared/typeorm/connection";
 import { Account } from "../../../accounts/typeorm/entities/Account";
 import { Transactions } from "../entities/Account";
 
+
+interface ITransaction {
+    debitedAccount: Account;
+    creditedAccount: Account;
+    value: number;
+}
+
 export class TransactionsRepository {
     static readonly transactionsRepository = dataSource.getRepository(Transactions);
 
@@ -14,6 +21,17 @@ export class TransactionsRepository {
         })
 
         return accountTransactions;
+
+    }
+
+    static async createTransaction({ debitedAccount, creditedAccount, value }: ITransaction) {
+        const transaction = this.transactionsRepository.create({
+            debitedAccount,
+            creditedAccount,
+            balance: value
+        })
+
+        await this.transactionsRepository.save(transaction);
 
     }
 }

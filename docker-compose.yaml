@@ -14,4 +14,4 @@ services:
 networks:
   default:
     external:
-      name: rabbitmq-conn
+      name: ng-cash-network

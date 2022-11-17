@@ -1,4 +1,5 @@
 import { dataSource } from "../../../../shared/typeorm/connection";
+import { TransactionsRepository } from "../../../transactions/typeorm/repository/TransactionsRepository";
 import { Account } from "../entities/Account";
 
 export class AccountRepository {
@@ -13,10 +14,10 @@ export class AccountRepository {
         return account;
     }
 
-    static async completeTransaction(debitedAccount: Account, creditedAccount: Account) {
+    static async completeTransaction(debitedAccount: Account, creditedAccount: Account, value: number) {
 
         const deb = await this.accountRepository.save(debitedAccount);
         await this.accountRepository.save(creditedAccount);
-
+        await TransactionsRepository.createTransaction({ creditedAccount, debitedAccount, value })
     }
 }

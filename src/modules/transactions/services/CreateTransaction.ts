@@ -1,6 +1,6 @@
 import { AccountRepository } from "../../accounts/typeorm/repositories/AccountRepository";
 
-interface ITransactionMessage {
+export interface ITransactionMessage {
     creditedAccountId: number;
     debitedAccountId: number;
     value: number;
@@ -11,10 +11,9 @@ export class CreateTransactionService {
         const debitedAccount = await AccountRepository.findById(debitedAccountId);
         const creditedAccount = await AccountRepository.findById(creditedAccountId);
 
-
         creditedAccount.balance += value;
         debitedAccount.balance -= value;
 
-        await AccountRepository.completeTransaction(debitedAccount, creditedAccount);
+        await AccountRepository.completeTransaction(debitedAccount, creditedAccount, value);
     }
 }
