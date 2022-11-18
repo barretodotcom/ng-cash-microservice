@@ -15,6 +15,7 @@ export class AccountRepository {
     }
 
     static async completeTransaction(debitedAccount: Account, creditedAccount: Account, value: number) {
+        await TransactionsRepository.createTransaction({ creditedAccount, debitedAccount, value })
 
         const debitedAccountBalance = await TransactionsRepository.calcAccountBalance(debitedAccount.id);
         const creditedAccountBalance = await TransactionsRepository.calcAccountBalance(creditedAccount.id);
@@ -25,6 +26,5 @@ export class AccountRepository {
         await this.accountRepository.save(debitedAccount);
         await this.accountRepository.save(creditedAccount);
 
-        await TransactionsRepository.createTransaction({ creditedAccount, debitedAccount, value })
     }
 }

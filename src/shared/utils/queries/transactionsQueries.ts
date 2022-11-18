@@ -8,7 +8,7 @@ export class TransactionQueries {
         FROM
             transactions t2
         WHERE
-            t2."debitedAccountId" = $1)
+            t2."debitedAccountId" = $1) as "balance"
         FROM
             transactions t
         WHERE

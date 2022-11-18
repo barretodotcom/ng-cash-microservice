@@ -35,9 +35,9 @@ export class TransactionsRepository {
         await this.transactionsRepository.save(transaction);
     }
 
-    static async calcAccountBalance(accountId: number) {
-        const balance = await this.transactionsRepository.query(TransactionQueries.getUserBalanceQuery(), [accountId]);
+    static async calcAccountBalance(accountId: number): Promise<number> {
+        const result = await this.transactionsRepository.query(TransactionQueries.getUserBalanceQuery(), [accountId])
 
-        return balance;
+        return result[0].balance;
     }
 }
