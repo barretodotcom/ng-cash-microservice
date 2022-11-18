@@ -11,9 +11,6 @@ export class CreateTransactionService {
         const debitedAccount = await AccountRepository.findById(debitedAccountId);
         const creditedAccount = await AccountRepository.findById(creditedAccountId);
 
-        creditedAccount.balance += value;
-        debitedAccount.balance -= value;
-
         await AccountRepository.completeTransaction(debitedAccount, creditedAccount, value);
     }
 }

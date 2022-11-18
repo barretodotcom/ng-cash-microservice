@@ -1,4 +1,5 @@
 import { dataSource } from "../../../../shared/typeorm/connection";
+import { TransactionQueries } from "../../../../shared/utils/queries/transactionsQueries";
 import { Account } from "../../../accounts/typeorm/entities/Account";
 import { Transactions } from "../entities/Account";
 
@@ -32,6 +33,11 @@ export class TransactionsRepository {
         })
 
         await this.transactionsRepository.save(transaction);
+    }
 
+    static async calcAccountBalance(accountId: number) {
+        const balance = await this.transactionsRepository.query(TransactionQueries.getUserBalanceQuery(), [accountId]);
+
+        return balance;
     }
 }
